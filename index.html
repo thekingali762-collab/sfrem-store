@@ -45,12 +45,12 @@
 
         .container {
             background: var(--card-bg);
-            padding: 40px 30px;
+            padding: 35px 25px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--purple-glow);
             border: 1px solid rgba(255, 215, 0, 0.25);
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
             text-align: center;
             backdrop-filter: blur(12px);
             position: relative;
@@ -68,53 +68,58 @@
         }
 
         .brand-header {
-            margin-bottom: 28px;
+            margin-bottom: 25px;
         }
 
         .brand-title {
             margin: 0;
-            font-size: 30px;
+            font-size: 28px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--gold-primary) 0%, #ffffff 50%, var(--purple-hover) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 15px var(--gold-glow);
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
         }
 
         .subtitle {
             color: var(--subtext-color);
-            font-size: 13px;
-            margin-top: 8px;
+            font-size: 12px;
+            margin-top: 6px;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             text-align: right;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-size: 13px;
             font-weight: 700;
             color: var(--gold-primary);
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
-            padding: 13px 16px;
+            padding: 12px 14px;
             border-radius: 10px;
             border: 1px solid rgba(138, 43, 226, 0.4);
             background: var(--input-bg);
             color: var(--text-color);
-            font-size: 14px;
+            font-size: 13px;
             outline: none;
         }
 
-        input:focus, select:focus {
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: monospace;
+        }
+
+        input:focus, select:focus, textarea:focus {
             border-color: var(--gold-primary);
             box-shadow: 0 0 12px var(--gold-glow);
         }
@@ -130,18 +135,17 @@
 
         button {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             border-radius: 10px;
             border: none;
             background: linear-gradient(135deg, var(--purple-primary), #5a189a);
             color: var(--gold-primary);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
             box-shadow: 0 4px 15px var(--purple-glow);
             border: 1px solid rgba(255, 215, 0, 0.3);
-            letter-spacing: 0.5px;
         }
 
         button:hover {
@@ -149,16 +153,6 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px var(--purple-glow), 0 0 10px var(--gold-glow);
             color: #ffffff;
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .btn-stop {
-            background: linear-gradient(135deg, #ff0055, #900) !important;
-            color: #fff !important;
-            margin-top: 8px;
         }
 
         .tool-section {
@@ -170,23 +164,39 @@
         }
 
         .status {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 12px 15px;
             border-radius: 10px;
             display: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             animation: fadeIn 0.3s ease;
         }
 
-        .success { background: rgba(0, 255, 135, 0.1); color: var(--success-color); border: 1px solid var(--success-color); display: block; box-shadow: 0 0 10px rgba(0, 255, 135, 0.2); }
-        .error { background: rgba(255, 0, 85, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; box-shadow: 0 0 10px rgba(255, 0, 85, 0.2); }
-        .info { background: rgba(255, 215, 0, 0.1); color: var(--gold-primary); border: 1px solid var(--gold-primary); display: block; box-shadow: 0 0 10px var(--gold-glow); }
+        .success { background: rgba(0, 255, 135, 0.1); color: var(--success-color); border: 1px solid var(--success-color); display: block; }
+        .error { background: rgba(255, 0, 85, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; }
+        .info { background: rgba(255, 215, 0, 0.1); color: var(--gold-primary); border: 1px solid var(--gold-primary); display: block; }
+
+        .output-box {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            max-height: 160px;
+            overflow-y: auto;
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            color: #00ff87;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
 
         .footer {
-            margin-top: 30px;
+            margin-top: 25px;
             color: var(--subtext-color);
-            font-size: 13px;
+            font-size: 12px;
             text-align: center;
             line-height: 1.8;
         }
@@ -196,31 +206,29 @@
         }
 
         .links-container {
-            margin-top: 12px;
+            margin-top: 10px;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+            gap: 6px;
+            padding: 7px 14px;
             background: rgba(138, 43, 226, 0.15);
             border: 1px solid rgba(255, 215, 0, 0.3);
             border-radius: 8px;
             color: #ffffff;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
         }
 
         .btn-link:hover {
             background: var(--purple-primary);
-            border-color: var(--gold-primary);
             color: var(--gold-primary);
-            box-shadow: 0 0 12px var(--purple-glow);
             transform: translateY(-2px);
         }
 
@@ -242,10 +250,10 @@
         <label for="toolSelect"><i class="fa-solid fa-toolbox"></i> اختر الأداة المطلوبة:</label>
         <select id="toolSelect" onchange="switchTool()">
             <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
-            <option value="probot">أداة تلفيل برو بوت (كل 70 ثانية) ⚡</option>
-            <option value="status_changer">تغيير حالة الحساب الأساسية 🟢</option>
-            <option value="user_gen_coming" disabled>توليد يوزرات ديسكورد رباعية (قريباً 🚀)</option>
-            <option value="posts_coming" disabled>أداة بوستات (قريباً 🚀)</option>
+            <option value="token_checker">فحص التوكنات والنيترو 🔍</option>
+            <option value="user_gen">توليد يوزرات ديسكورد (ثلاثية، رباعية) 🎯</option>
+            <option value="probot_coming" disabled>أداة تلفيل برو بوت (قريباً 🚀)</option>
+            <option value="multi_edit_coming" disabled>أداة تغيير المعلومات (قريباً 🚀)</option>
             <option value="servers_coming" disabled>أداة نسخ سيرفرات (قريباً 🚀)</option>
         </select>
     </div>
@@ -270,40 +278,48 @@
         <button onclick="handleHypeSquad()"><i class="fa-solid fa-bolt"></i> تنفيذ الإجراء الآن</button>
     </div>
 
-    <!-- أداة تلفيل برو بوت -->
-    <div id="probotTool" class="tool-section">
+    <!-- أداة فحص التوكنات -->
+    <div id="tokenCheckerTool" class="tool-section">
         <div class="form-group">
-            <label for="proToken"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
-            <input type="password" id="proToken" placeholder="ضع التوكن الخاص بك هنا..." required>
+            <label for="tokensList"><i class="fa-solid fa-list-check"></i> التوكنات المراد فحصها (توكن بکل سطر):</label>
+            <textarea id="tokensList" placeholder="أدخل التوكنات هنا لفحص معلوماتها..."></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="channelId"><i class="fa-solid fa-hashtag"></i> أيدي الروم (Channel ID):</label>
-            <input type="text" id="channelId" placeholder="أدخل أيدي روم التلفيل..." required>
-        </div>
-
-        <button onclick="startProBot()"><i class="fa-solid fa-play"></i> تشغيل التلفيل (كل 70 ثانية)</button>
-        <button class="btn-stop" onclick="stopProBot()"><i class="fa-solid fa-stop"></i> إيقاف التلفيل</button>
+        <button onclick="checkTokens()"><i class="fa-solid fa-magnifying-glass-chart"></i> بدء فحص التوكنات</button>
+        <div id="checkerOutput" class="output-box" style="display: none;"></div>
     </div>
 
-    <!-- أداة تغيير حالة الحساب -->
-    <div id="statusChangerTool" class="tool-section">
+    <!-- أداة توليد اليوزرات -->
+    <div id="userGenTool" class="tool-section">
         <div class="form-group">
-            <label for="statusToken"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
-            <input type="password" id="statusToken" placeholder="ضع التوكن الخاص بك هنا..." required>
-        </div>
-
-        <div class="form-group">
-            <label for="presenceStatus"><i class="fa-solid fa-circle-dot"></i> حالة الحساب:</label>
-            <select id="presenceStatus">
-                <option value="online">متصل (Online)</option>
-                <option value="idle">خامل (Idle)</option>
-                <option value="dnd">مشغول (Do Not Disturb)</option>
-                <option value="invisible">غير متصل / مخفي (Invisible)</option>
+            <label for="userType"><i class="fa-solid fa-font"></i> نوع اليوزر المطلوب:</label>
+            <select id="userType">
+                <option value="3">يوزرات ثلاثية (3 أحرف)</option>
+                <option value="4" selected>يوزرات رباعية (4 أحرف)</option>
+                <option value="5">يوزرات خماسية (5 أحرف)</option>
             </select>
         </div>
 
-        <button onclick="updateUserStatus()"><i class="fa-solid fa-sliders"></i> تحديث الحالة الآن</button>
+        <div class="form-group">
+            <label for="genAmount"><i class="fa-solid fa-hashtag"></i> عدد اليوزرات المراد توليدها:</label>
+            <input type="number" id="genAmount" value="20" min="1" max="500">
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+            <div class="form-group" style="flex: 1;">
+                <label for="prefixPattern">البداية (اختياري):</label>
+                <input type="text" id="prefixPattern" placeholder="مثلاً: a">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label for="suffixPattern">النهاية (اختياري):</label>
+                <input type="text" id="suffixPattern" placeholder="مثلاً: 7">
+            </div>
+        </div>
+
+        <button onclick="generateUsernames()"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد اليوزرات الآن</button>
+        <button onclick="copyGeneratedUsers()" style="background: linear-gradient(135deg, #10b981, #059669); color:#fff; display:none;" id="copyBtn"><i class="fa-solid fa-copy"></i> نسخ كل اليوزرات</button>
+
+        <div id="userOutput" class="output-box" style="display: none;"></div>
     </div>
 
     <div id="status" class="status"></div>
@@ -326,16 +342,16 @@
 function switchTool() {
     const selected = document.getElementById('toolSelect').value;
     document.getElementById('hypesquadTool').classList.remove('active-tool');
-    document.getElementById('probotTool').classList.remove('active-tool');
-    document.getElementById('statusChangerTool').classList.remove('active-tool');
+    document.getElementById('tokenCheckerTool').classList.remove('active-tool');
+    document.getElementById('userGenTool').classList.remove('active-tool');
     document.getElementById('status').style.display = 'none';
 
     if (selected === 'hypesquad') {
         document.getElementById('hypesquadTool').classList.add('active-tool');
-    } else if (selected === 'probot') {
-        document.getElementById('probotTool').classList.add('active-tool');
-    } else if (selected === 'status_changer') {
-        document.getElementById('statusChangerTool').classList.add('active-tool');
+    } else if (selected === 'token_checker') {
+        document.getElementById('tokenCheckerTool').classList.add('active-tool');
+    } else if (selected === 'user_gen') {
+        document.getElementById('userGenTool').classList.add('active-tool');
     }
 }
 
@@ -383,106 +399,93 @@ async function handleHypeSquad() {
     }
 }
 
-let probotInterval = null;
-const randomWords = [
-    "مرحبا", "سلام عليكم", "كيفكم شباب", "منورين السيرفر", "يا هلا", 
-    "أهلاً وسهلاً", "جمعة مباركة", "يسعد مساكم", "أحلى شباب", "تشرفت بالجميع",
-    "فداكم", "استمرو", "عاشت ايديكم", "ممتاز جدا", "الله يوفقكم", "تحياتي للجميع"
-];
-
-function startProBot() {
-    const token = document.getElementById('proToken').value.trim();
-    const channelId = document.getElementById('channelId').value.trim();
+async function checkTokens() {
+    const tokensText = document.getElementById('tokensList').value.trim();
+    const outputBox = document.getElementById('checkerOutput');
     const statusDiv = document.getElementById('status');
 
-    if (!token || !channelId) {
+    if (!tokensText) {
         statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن وأيدي الروم!';
+        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال توكن واحد على الأقل!';
         return;
     }
 
-    if (probotInterval) {
-        clearInterval(probotInterval);
+    const tokens = tokensText.split('\n').map(t => t.trim()).filter(t => t !== '');
+    statusDiv.className = "status info";
+    statusDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري فحص ${tokens.length} توكن...`;
+    outputBox.style.display = 'block';
+    outputBox.innerText = "جاري جلب المعلومات من ديسكورد...\n";
+
+    let results = "";
+    for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+        try {
+            const res = await fetch('https://discord.com/api/v9/users/@me', {
+                headers: { 'Authorization': token }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                
+                let nitroStatus = "عادي (بدون نترو)";
+                if (data.premium_type === 1) nitroStatus = "Nitro Classic 🚀";
+                if (data.premium_type === 2) nitroStatus = "Nitro Boost 🚀✨";
+
+                results += `[✓] الحساب ${i+1}: ${data.username}#(${data.discriminator || '0'}) | النيترو: ${nitroStatus}\n`;
+            } else {
+                results += `[✗] الحساب ${i+1}: توكن غير صالح أو مسكر (Invalid Token)\n`;
+            }
+        } catch (e) {
+            results += `[!] الحساب ${i+1}: خطأ في الاتصال.\n`;
+        }
     }
+    
+    outputBox.innerText = results;
+    statusDiv.className = "status success";
+    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> اكتمل فحص التوكنات بنجاح!';
+}
+
+let generatedUsersList = [];
+
+function generateUsernames() {
+    const type = parseInt(document.getElementById('userType').value);
+    const amount = parseInt(document.getElementById('genAmount').value) || 20;
+    const prefix = document.getElementById('prefixPattern').value.trim();
+    const suffix = document.getElementById('suffixPattern').value.trim();
+    const outputBox = document.getElementById('userOutput');
+    const copyBtn = document.getElementById('copyBtn');
+    const statusDiv = document.getElementById('status');
+
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789._';
+    generatedUsersList = [];
+
+    for (let i = 0; i < amount; i++) {
+        let coreLength = type - prefix.length - suffix.length;
+        if (coreLength < 1) coreLength = 1;
+
+        let core = '';
+        for (let j = 0; j < coreLength; j++) {
+            core += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        generatedUsersList.push(prefix + core + suffix);
+    }
+
+    outputBox.style.display = 'block';
+    outputBox.innerText = generatedUsersList.join('\n');
+    copyBtn.style.display = 'block';
 
     statusDiv.className = "status success";
-    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم تشغيل نظام التلفيل التلقائي (رسالة كل 70 ثانية)! ⚡';
-
-    sendProBotMessage(token, channelId);
-
-    probotInterval = setInterval(() => {
-        sendProBotMessage(token, channelId);
-    }, 70000);
+    statusDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i> تم توليد ${generatedUsersList.length} يوزر بنجاح!`;
 }
 
-async function sendProBotMessage(token, channelId) {
-    const randomText = randomWords[Math.floor(Math.random() * randomWords.length)] + " " + Math.floor(Math.random() * 10000);
-    try {
-        await fetch(`https://discord.com/api/v9/channels/${channelId}/messages`, {
-            method: 'POST',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ content: randomText })
-        });
-    } catch (e) {
-        console.log("Error sending message");
-    }
-}
-
-function stopProBot() {
-    const statusDiv = document.getElementById('status');
-    if (probotInterval) {
-        clearInterval(probotInterval);
-        probotInterval = null;
-        statusDiv.className = "status info";
-        statusDiv.innerHTML = '<i class="fa-solid fa-circle-stop"></i> تم إيقاف نظام التلفيل التلقائي.';
-    } else {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> النظام غير مُشغّل أساساً!';
-    }
-}
-
-async function updateUserStatus() {
-    const token = document.getElementById('statusToken').value.trim();
-    const presenceStatus = document.getElementById('presenceStatus').value;
-    const statusDiv = document.getElementById('status');
-
-    if (!token) {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن أولاً!';
-        return;
-    }
-
-    statusDiv.className = "status info";
-    statusDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديث حالة الحساب...';
-
-    try {
-        const response = await fetch('https://discord.com/api/v9/users/@me/settings', {
-            method: 'PATCH',
-            headers: {
-                'Authorization': token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: presenceStatus
-            })
-        });
-
-        if (response.ok || response.status === 200) {
-            statusDiv.className = "status success";
-            statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم تحديث الحالة بنجاح! 🟢';
-        } else {
-            statusDiv.className = "status error";
-            statusDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> فشل التحديث! تأكد من صحة التوكن.';
-        }
-    } catch (err) {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-wifi"></i> حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.';
-    }
+function copyGeneratedUsers() {
+    if (generatedUsersList.length === 0) return;
+    navigator.clipboard.writeText(generatedUsersList.join('\n')).then(() => {
+        const statusDiv = document.getElementById('status');
+        statusDiv.className = "status success";
+        statusDiv.innerHTML = '<i class="fa-solid fa-copy"></i> تم نسخ جميع اليوزرات إلى الحافظة!';
+    });
 }
 </script>
-
 </body>
 </html>
