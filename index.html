@@ -312,18 +312,18 @@
             <label for="tool-selector"><i class="fa-solid fa-screwdriver-wrench"></i> اختر الأداة المطلوبة:</label>
             <select id="tool-selector" onchange="switchTool()">
                 <option value="">-- اضغط هنا لاختيار الأداة --</option>
-                <option value="hypesquad">أداة هايب سكواد (مكتبة Requests)</option>
+                <option value="hypesquad">أداة هايب سكواد</option>
                 <option value="generator">أداة توليد اليوزرات</option>
                 <option value="checker">أداة فحص توكن</option>
             </select>
         </div>
 
-        <!-- 1. أداة هايب سكواد بايثون -->
+        <!-- 1. أداة هايب سكواد -->
         <div id="panel-hypesquad" class="tool-panel">
-            <div class="tool-title"><i class="fa-solid fa-medal"></i> أداة هايب سكواد (Requests Python)</div>
+            <div class="tool-title"><i class="fa-solid fa-medal"></i> أداة هايب سكواد</div>
             <div class="input-group">
                 <label>توكن الحساب</label>
-                <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا...">
+                <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا..." value="MTI4MzExNDMxNDA1NzkyMA.Ghow2B.9-6FJnqiI691C5zVcdfPS4LN6jIeio4BwyTg0g">
             </div>
             <div class="input-group">
                 <label>اختر الشارة</label>
@@ -334,7 +334,7 @@
                     <option value="0">إلغاء الشارة تماماً (None)</option>
                 </select>
             </div>
-            <button class="btn" onclick="generatePythonScript()">توليد سكود بايثون الجاهز</button>
+            <button class="btn" onclick="generatePythonScript()">توليد سكربت التنفيذ الجاهز</button>
             <div id="hs-output" class="output-box" style="display:none;"></div>
             <button id="copy-script-btn" class="copy-btn" style="display:none;" onclick="copyScript()"><i class="fa-solid fa-copy"></i> نسخ السكربت</button>
         </div>
@@ -371,9 +371,9 @@
             <div class="tool-title"><i class="fa-solid fa-shield-halved"></i> أداة فحص توكن</div>
             <div class="input-group">
                 <label>أدخل التوكن لفحصه</label>
-                <input type="password" id="chk-token" placeholder="ضع التوكن هنا...">
+                <input type="password" id="chk-token" placeholder="ضع التوكن هنا..." value="MTI4MzExNDMxNDA1NzkyMA.Ghow2B.9-6FJnqiI691C5zVcdfPS4LN6jIeio4BwyTg0g">
             </div>
-            <button class="btn" onclick="runCheckerScript()">توليد سكربت فحص التوكن</button>
+            <button class="btn" onclick="runCheckerScript()">توليد سكربت الفحص</button>
             <div id="chk-output" class="output-box" style="display:none;"></div>
         </div>
 
@@ -451,7 +451,7 @@ else:
         function copyScript() {
             const outputText = document.getElementById('hs-output').textContent;
             navigator.clipboard.writeText(outputText).then(() => {
-                alert('✨ تم نسخ سكربت بايثون بنجاح! الصقه في التيرمكس وشغله.');
+                alert('✨ تم نسخ السكربت بنجاح!');
             });
         }
 
