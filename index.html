@@ -136,7 +136,7 @@
             border-radius: 10px;
             padding: 12px;
             color: #fff;
-            font-size: 0.95krem;
+            font-size: 0.95rem;
             outline: none;
             transition: border-color 0.3s;
         }
@@ -178,7 +178,6 @@
             word-break: break-all;
         }
 
-        /* قريباً قسم */
         .coming-soon-section {
             background: rgba(18, 12, 32, 0.4);
             border: 1px dashed rgba(186, 104, 200, 0.3);
@@ -219,7 +218,6 @@
             font-size: 0.8rem;
         }
 
-        /* الفوتر */
         footer {
             background: rgba(10, 6, 20, 0.9);
             border-top: 1px solid var(--border-color);
@@ -281,9 +279,9 @@
         </header>
 
         <div class="tools-grid">
-            <!-- أداة هايباسكواد -->
+            <!-- أداة هايب سكواد -->
             <div class="card">
-                <h3><i class="fa-solid fasigns-post"></i> مبدل HypeSquad</h3>
+                <h3><i class="fa-solid fa-medal"></i> أداة هايب سكواد</h3>
                 <div class="input-group">
                     <label>توكن الحساب</label>
                     <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا...">
@@ -303,7 +301,7 @@
 
             <!-- أداة توليد اليوزرات -->
             <div class="card">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> مولد اليوزرات</h3>
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> أداة توليد اليوزرات</h3>
                 <div class="input-group">
                     <label>العدد المطلوب</label>
                     <input type="number" id="gen-count" value="10" min="1" max="50">
@@ -330,7 +328,7 @@
 
             <!-- أداة فحص التوكن -->
             <div class="card" style="grid-column: 1 / -1; max-width: 500px; margin: 0 auto; width: 100%;">
-                <h3><i class="fa-solid fa-shield-halved"></i> فحص التوكن</h3>
+                <h3><i class="fa-solid fa-shield-halved"></i> أداة فحص توكن</h3>
                 <div class="input-group">
                     <label>أدخل التوكن لفحصه</label>
                     <input type="password" id="chk-token" placeholder="ضع التوكن هنا...">
@@ -361,7 +359,6 @@
     </footer>
 
     <script>
-        // دالة الهايباسكواد
         function changeHypeSquad() {
             const token = document.getElementById('hs-token').value.trim();
             const house = document.getElementById('hs-house').value;
@@ -373,7 +370,7 @@
                 return;
             }
 
-            output.innerHTML = 'جاري إرسال الطلب إلى ديسكورد... (ملاحظة: قيود CORS تمنع الطلبات المباشرة من المتصفح أحياناً)';
+            output.innerHTML = 'جاري إرسال الطلب إلى ديسكورد...';
             
             fetch('https://discord.com/api/v9/hypesquad/online', {
                 method: 'POST',
@@ -385,17 +382,16 @@
             })
             .then(res => {
                 if(res.ok) {
-                    output.innerHTML = house === "0" ? 'تم إزالة الشارة بنجاح!' : 'تم تغيير الهايباسكواد بنجاح!';
+                    output.innerHTML = house === "0" ? 'تم إزالة الشارة بنجاح!' : 'تم تغيير الهايب سكواد بنجاح!';
                 } else {
-                    output.innerHTML = 'فشل الطلب، تحقق من صحة التوكن أو جرب من بيئة خادم (Backend).';
+                    output.innerHTML = 'فشل الطلب، تحقق من صحة التوكن أو قيود المتصفح.';
                 }
             })
-            .catch(err => {
+            .catch(() => {
                 output.innerHTML = 'خطأ بالاتصال (مشكلة أمان المتصفح CORS).';
             });
         }
 
-        // دالة توليد اليوزرات
         function generateUsernames() {
             const count = parseInt(document.getElementById('gen-count').value) || 10;
             const type = document.getElementById('gen-type').value;
@@ -421,7 +417,6 @@
             output.innerHTML = results.join('<br>');
         }
 
-        // دالة فحص التوكن
         function checkTokenInfo() {
             const token = document.getElementById('chk-token').value.trim();
             const output = document.getElementById('chk-output');
@@ -440,7 +435,7 @@
             .then(res => res.json())
             .then(data => {
                 if (data.id) {
-                    output.innerHTML = `<b>الحساب صالح!</b><br>المعرف: ${data.id}<br>اسم المستخدم: ${data.username}#${data.discriminator || '0'}<br>البريد: ${data.email || 'غير متاح'}`;
+                    output.innerHTML = `<b>الحساب صالح!</b><br>المعرف: ${data.id}<br>اسم المستخدم: ${data.username}<br>البريد: ${data.email || 'غير متاح'}`;
                 } else {
                     output.innerHTML = 'التوكن غير صالح أو منتهي الصلاحية.';
                 }
