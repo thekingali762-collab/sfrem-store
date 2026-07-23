@@ -9,14 +9,14 @@
     <style>
         :root {
             --bg-color: #080510;
-            --panel-bg: rgba(18, 12, 32, 0.75);
-            --border-color: rgba(186, 104, 200, 0.25);
-            --border-hover: rgba(255, 215, 0, 0.5);
+            --panel-bg: rgba(18, 12, 32, 0.8);
+            --border-color: rgba(186, 104, 200, 0.3);
+            --border-hover: rgba(255, 215, 0, 0.6);
             --primary-purple: #9c27b0;
             --accent-gold: #ffd700;
             --text-main: #f3e5f5;
             --text-muted: #b39ddb;
-            --shadow-glow: 0 0 30px rgba(156, 39, 176, 0.2);
+            --shadow-glow: 0 0 30px rgba(156, 39, 176, 0.25);
         }
 
         * {
@@ -29,8 +29,8 @@
         body {
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.18) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.12) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -57,7 +57,7 @@
             background: linear-gradient(135deg, var(--text-main), var(--accent-gold), var(--primary-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
             margin-bottom: 10px;
         }
 
@@ -66,7 +66,6 @@
             font-size: 1.1rem;
         }
 
-        /* صندوق اختيار الأدوات الرئيسي */
         .selector-card {
             background: var(--panel-bg);
             backdrop-filter: blur(16px);
@@ -87,7 +86,7 @@
 
         select, input {
             width: 100%;
-            background: rgba(8, 5, 16, 0.7);
+            background: rgba(8, 5, 16, 0.8);
             border: 1px solid rgba(186, 104, 200, 0.4);
             border-radius: 12px;
             padding: 14px;
@@ -99,10 +98,9 @@
 
         select:focus, input:focus {
             border-color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
         }
 
-        /* حاوية الأداة المفعلة */
         .tool-panel {
             display: none;
             background: var(--panel-bg);
@@ -172,7 +170,7 @@
 
         .output-box {
             margin-top: 20px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px dashed rgba(255, 215, 0, 0.4);
             border-radius: 10px;
             padding: 15px;
@@ -184,7 +182,6 @@
             line-height: 1.6;
         }
 
-        /* قسم قريباً */
         .coming-soon-section {
             background: rgba(18, 12, 32, 0.4);
             border: 1px dashed rgba(186, 104, 200, 0.3);
@@ -225,7 +222,6 @@
             font-size: 0.8rem;
         }
 
-        /* الفوتر */
         footer {
             background: rgba(10, 6, 20, 0.95);
             border-top: 1px solid var(--border-color);
@@ -291,7 +287,6 @@
             <p>منصتك الاحترافية لأدوات ديسكورد المتطورة</p>
         </header>
 
-        <!-- قائمة اختيار الأدوات -->
         <div class="selector-card">
             <label for="tool-selector"><i class="fa-solid fa-screwdriver-wrench"></i> اختر الأداة المطلوبة:</label>
             <select id="tool-selector" onchange="switchTool()">
@@ -318,7 +313,7 @@
                     <option value="0">إلغاء الشارة تماماً (None)</option>
                 </select>
             </div>
-            <button class="btn" onclick="runHypeSquad()">تنفيذ العملية بنجاح</button>
+            <button class="btn" onclick="runHypeSquad()">تنفيذ تغيير الشارة</button>
             <div id="hs-output" class="output-box" style="display:none;"></div>
         </div>
 
@@ -360,7 +355,6 @@
             <div id="chk-output" class="output-box" style="display:none;"></div>
         </div>
 
-        <!-- قائمة الأدوات القادمة -->
         <div class="coming-soon-section">
             <h3><i class="fa-solid fa-clock-rotate-left"></i> أدوات يتم إضافتها قريباً</h3>
             <div class="tags-container">
@@ -381,7 +375,6 @@
     </footer>
 
     <script>
-        // دالة تبديل ظهور الأدوات بناءً على القائمة المنسدلة
         function switchTool() {
             const selectedVal = document.getElementById('tool-selector').value;
             const panels = document.querySelectorAll('.tool-panel');
@@ -394,41 +387,40 @@
             }
         }
 
-        // 1. تشغيل أداة هايب سكواد (100% شغالة بدون حظر المتصفح عبر رسائل توجيهية دقيقة)
-        function runHypeSquad() {
+        async function runHypeSquad() {
             const token = document.getElementById('hs-token').value.trim();
             const house = document.getElementById('hs-house').value;
             const output = document.getElementById('hs-output');
             
             output.style.display = 'block';
             if (!token) {
-                output.innerHTML = '❌الرجاء إدخال التوكن أولاً!';
+                output.innerHTML = '❌ الرجاء إدخال التوكن أولاً!';
                 return;
             }
 
-            output.innerHTML = '⏳ جاري معالجة الطلب والتواصل مع الخوادم...';
+            output.innerHTML = '⏳ جاري إرسال الطلب إلى ديسكورد...';
 
-            fetch('https://discord.com/api/v9/hypesquad/online', {
-                method: 'POST',
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ house_id: parseInt(house) })
-            })
-            .then(res => {
-                if(res.ok) {
+            try {
+                const response = await fetch('https://discord.com/api/v9/hypesquad/online', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ house_id: parseInt(house) })
+                });
+
+                if (response.ok || response.status === 204) {
                     output.innerHTML = house === "0" ? '✅ تم إزالة الشارة بنجاح تام!' : '✅ تم تغيير شارة الهايب سكواد بنجاح تام!';
                 } else {
-                    output.innerHTML = '⚠️ ملاحظة أمنية: متصفحات الويب تحظر اتصالات الديسكورد المباشرة (CORS). الأداة سليمة، ولكن يُفضل استخدامها عبر سكربت بايثون أو بروكسي لضمان التنفيذ الفوري.';
+                    const errData = await response.json().catch(() => ({}));
+                    output.innerHTML = `❌ فشل الطلب (رمز الخطأ: ${response.status}). تحقق من صحة التوكن.`;
                 }
-            })
-            .catch(() => {
-                output.innerHTML = '✅ تم إرسال الطلب، لكن قيود أمان متصفحك منعت الاستجابة المباشرة. (الكود سليم 100%).';
-            });
+            } catch (error) {
+                output.innerHTML = '❌ حدث خطأ في الاتصال. تأكد من صحة التوكن أو جرب مرة أخرى.';
+            }
         }
 
-        // 2. تشغيل أداة توليد اليوزرات (شغالة 100% محلياً)
         function runGenerator() {
             const count = parseInt(document.getElementById('gen-count').value) || 10;
             const type = document.getElementById('gen-type').value;
@@ -454,8 +446,7 @@
             output.innerHTML = '<b>✨ اليوزرات المולدة بنجاح:</b><br>' + results.join('<br>');
         }
 
-        // 3. تشغيل أداة فحص التوكن (100% شغال مع معالجة الأمان)
-        function runChecker() {
+        async function runChecker() {
             const token = document.getElementById('chk-token').value.trim();
             const output = document.getElementById('chk-output');
 
@@ -467,20 +458,20 @@
 
             output.innerHTML = '⏳ جاري فحص بيانات الحساب...';
 
-            fetch('https://discord.com/api/v9/users/@me', {
-                headers: { 'Authorization': token }
-            })
-            .then(res => res.json())
-            .then(data => {
+            try {
+                const response = await fetch('https://discord.com/api/v9/users/@me', {
+                    headers: { 'Authorization': token }
+                });
+                const data = await response.json();
+
                 if (data.id) {
                     output.innerHTML = `✅ <b>التوكن شغال وصالح!</b><br>🆔 المعرف: ${data.id}<br>👤 المستخدم: ${data.username}<br>📧 البريد: ${data.email || 'محمي/غير متاح'}`;
                 } else {
                     output.innerHTML = '❌ التوكن غير صالح أو منتهي الصلاحية.';
                 }
-            })
-            .catch(() => {
-                output.innerHTML = '⚠️ تم التحقق، ولكن قيود متصفحك (CORS) تمنع قراءة بيانات الحساب مباشرة عبر الويب. الكود صحيح ومبرمج بالطريقة الصحيحة.';
-            });
+            } catch (error) {
+                output.innerHTML = '❌ فشل الاتصال بالخادم، تحقق من التوكن.';
+            }
         }
     </script>
 </body>
