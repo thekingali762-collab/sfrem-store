@@ -5,15 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HypeSquad Changer</title>
     <style>
-        body { font-family: sans-serif; background: #202225; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #2f3136; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; }
-        button { background: #5865f2; color: white; font-weight: bold; cursor: pointer; border: none; padding: 10px; width: 100%; border-radius: 4px; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #2f3136; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background-color: #36393f; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); width: 100%; max-width: 420px; text-align: center; }
+        h2 { margin-bottom: 20px; color: #5865f2; }
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 15px; }
+        input { background: #202225; color: #fff; border: 1px solid #40444b; outline: none; }
+        select { background: #202225; color: #fff; cursor: pointer; }
+        button { background: #5865f2; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #4752c4; }
+        .status { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; font-weight: bold; }
+        .success { background: #2dc770; color: #fff; display: block; }
+        .error { background: #ed4245; color: #fff; display: block; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>HypeSquad Changer</h2>
-        <p>الموقع شغال بنجاح 🎉</p>
-    </div>
+
+<div class="container">
+    <h2>HypeSquad Changer 🚀</h2>
+    
+    <label style="display:block; text-align:right; margin-bottom:5px; font-size:14px;">توكن الحساب (Discord Token):</label>
+    <input type="password" id="token" placeholder="أدخل التوكن هنا..." required>
+
+    <label style="display:block; text-align:right; margin-bottom:5px; font-size:14px;">اختر البيت (House):</label>
+    <select id="house">
+        <option value="1">Bravery 🟣</option>
+        <option value="2">Brilliance 🔴</option>
+        <option value="3">Balance 🟢</option>
+    </select>
+
+    <button onclick="changeHypeSquad()">تغيير HypeSquad</button>
+
+    <div id="status" class="status"></div>
+</div>
+
+<script>
+async function changeHypeSquad() {
+    const token = document.getElementById('token').value.trim();
+    const house = document.getElementById('house').value;
+    const statusDiv = document.getElementById('status');
+
+    if (!token) {
+        statusDiv.className = "status error";
+        statusDiv.innerText = "الرجاء كتابة التوكن أولاً!";
+        return;
+    }
+
+    statusDiv.className = "status";
+    statusDiv.style.display = "block";
+    statusDiv.style.background = "#faa81a";
+    statusDiv.innerText = "جاري التغيير...";
+
+    try {
+        const response = await fetch('https://discord.com/api/v9/hypesquad/online', {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ house_id: house })
+        });
+
+        if (response.ok || response.status === 204) {
+            statusDiv.className = "status success";
+            statusDiv.innerText = "تم تغيير الـ HypeSquad بنجاح! 🎉";
+        } else {
+            const errData = await response.json().catch(() => ({}));
+            statusDiv.className = "status error";
+            statusDiv.innerText = "فشل التغيير! تأكد من صحة التوكن.";
+        }
+    } catch (err) {
+        statusDiv.className = "status error";
+        statusDiv.innerText = "حدث خطأ بالاتصال شبكة أجهزة ديسكورد.";
+    }
+}
+</script>
+
 </body>
 </html>
