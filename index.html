@@ -155,6 +155,20 @@
             transform: translateY(0);
         }
 
+        .btn-stop {
+            background: linear-gradient(135deg, #ff0055, #900) !important;
+            color: #fff !important;
+            margin-top: 8px;
+        }
+
+        .tool-section {
+            display: none;
+        }
+
+        .active-tool {
+            display: block;
+        }
+
         .status {
             margin-top: 20px;
             padding: 12px 15px;
@@ -226,13 +240,16 @@
 
     <div class="form-group">
         <label for="toolSelect"><i class="fa-solid fa-toolbox"></i> اختر الأداة المطلوبة:</label>
-        <select id="toolSelect">
+        <select id="toolSelect" onchange="switchTool()">
             <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
-            <option value="coming_soon" disabled>قريباً أدوات جديدة... 🚀</option>
+            <option value="probot">أداة تلفيل برو بوت (ProBot Leveling) ⚡</option>
+            <option value="status_coming" disabled>تغيير حالة المستخدم (قريباً 🚀)</option>
+            <option value="other_coming" disabled>أدوات أخرى (قريباً 🔒)</option>
         </select>
     </div>
 
-    <div id="hypesquadTool">
+    <!-- أداة الهايب سكواد -->
+    <div id="hypesquadTool" class="tool-section active-tool">
         <div class="form-group">
             <label for="token"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
             <input type="password" id="token" placeholder="ضع التوكن الخاص بك هنا..." required>
@@ -249,6 +266,22 @@
         </div>
 
         <button onclick="handleHypeSquad()"><i class="fa-solid fa-bolt"></i> تنفيذ الإجراء الآن</button>
+    </div>
+
+    <!-- أداة تلفيل برو بوت -->
+    <div id="probotTool" class="tool-section">
+        <div class="form-group">
+            <label for="proToken"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
+            <input type="password" id="proToken" placeholder="ضع التوكن الخاص بك هنا..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="channelId"><i class="fa-solid fa-hashtag"></i> أيدي الروم (Channel ID):</label>
+            <input type="text" id="channelId" placeholder="أدخل أيدي روم التلفيل..." required>
+        </div>
+
+        <button onclick="startProBot()"><i class="fa-solid fa-play"></i> تشغيل التلفيل (كل 70 ثانية)</button>
+        <button class="btn-stop" onclick="stopProBot()"><i class="fa-solid fa-stop"></i> إيقاف التلفيل</button>
     </div>
 
     <div id="status" class="status"></div>
@@ -268,6 +301,19 @@
 </div>
 
 <script>
+function switchTool() {
+    const selected = document.getElementById('toolSelect').value;
+    document.getElementById('hypesquadTool').classList.remove('active-tool');
+    document.getElementById('probotTool').classList.remove('active-tool');
+    document.getElementById('status').style.display = 'none';
+
+    if (selected === 'hypesquad') {
+        document.getElementById('hypesquadTool').classList.add('active-tool');
+    } else if (selected === 'probot') {
+        document.getElementById('probotTool').classList.add('active-tool');
+    }
+}
+
 async function handleHypeSquad() {
     const token = document.getElementById('token').value.trim();
     const house = document.getElementById('house').value;
@@ -287,18 +333,12 @@ async function handleHypeSquad() {
         if (house === 'leave') {
             response = await fetch('https://discord.com/api/v9/hypesquad/online', {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Authorization': token, 'Content-Type': 'application/json' }
             });
         } else {
             response = await fetch('https://discord.com/api/v9/hypesquad/online', {
                 method: 'POST',
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Authorization': token, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ house_id: house })
             });
         }
@@ -315,6 +355,70 @@ async function handleHypeSquad() {
     } catch (err) {
         statusDiv.className = "status error";
         statusDiv.innerHTML = '<i class="fa-solid fa-wifi"></i> حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.';
+    }
+}
+
+let probotInterval = null;
+
+const randomWords = [
+    "مرحبا", "سلام عليكم", "كيفكم شباب", "منورين السيرفر", "يا هلا", 
+    "أهلاً وسهلاً", "جمعة مباركة", "يسعد مساكم", "أحلى شباب", "تشرفت بالجميع",
+    "فداكم", "استمرو", "عاشت ايديكم", "ممتاز جدا", "الله يوفقكم", "تحياتي للجميع"
+];
+
+function startProBot() {
+    const token = document.getElementById('proToken').value.trim();
+    const channelId = document.getElementById('channelId').value.trim();
+    const statusDiv = document.getElementById('status');
+
+    if (!token || !channelId) {
+        statusDiv.className = "status error";
+        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن وأيدي الروم!';
+        return;
+    }
+
+    if (probotInterval) {
+        clearInterval(probotInterval);
+    }
+
+    statusDiv.className = "status success";
+    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم تشغيل نظام التلفيل التلقائي (رسالة كل 70 ثانية)! ⚡';
+
+    // إرسال رسالة أولية مباشرة عند التشغيل
+    sendProBotMessage(token, channelId);
+
+    // ضبط المؤقت على 70 ثانية (70000 ميلي ثانية)
+    probotInterval = setInterval(() => {
+        sendProBotMessage(token, channelId);
+    }, 70000);
+}
+
+async function sendProBotMessage(token, channelId) {
+    const randomText = randomWords[Math.floor(Math.random() * randomWords.length)] + " " + Math.floor(Math.random() * 10000);
+    try {
+        await fetch(`https://discord.com/api/v9/channels/${channelId}/messages`, {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: randomText })
+        });
+    } catch (e) {
+        console.log("Error sending message");
+    }
+}
+
+function stopProBot() {
+    const statusDiv = document.getElementById('status');
+    if (probotInterval) {
+        clearInterval(probotInterval);
+        probotInterval = null;
+        statusDiv.className = "status info";
+        statusDiv.innerHTML = '<i class="fa-solid fa-circle-stop"></i> تم إيقاف نظام التلفيل التلقائي.';
+    } else {
+        statusDiv.className = "status error";
+        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> النظام غير مُشغّل أساساً!';
     }
 }
 </script>
