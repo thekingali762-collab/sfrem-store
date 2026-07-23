@@ -7,27 +7,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1e1f22;
-            --card-bg: #2b2d31;
-            --input-bg: #111214;
-            --accent-color: #5865f2;
-            --accent-hover: #4752c4;
-            --text-color: #f2f3f5;
-            --subtext-color: #949ba4;
-            --success-color: #23a55a;
-            --danger-color: #f23f43;
-            --warning-color: #f0b232;
+            --bg-color: #0b0712;
+            --card-bg: rgba(22, 13, 36, 0.85);
+            --gold-primary: #ffd700;
+            --gold-secondary: #ffb700;
+            --gold-glow: rgba(255, 215, 0, 0.4);
+            --purple-primary: #8a2be2;
+            --purple-hover: #9d4edf;
+            --purple-glow: rgba(138, 43, 226, 0.5);
+            --text-color: #ffffff;
+            --subtext-color: #d1c4e9;
+            --input-bg: rgba(10, 5, 18, 0.9);
+            --success-color: #00ff87;
+            --danger-color: #ff0055;
         }
 
         * {
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 10%, #2b2d31 0%, #1e1f22 70%);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(138, 43, 226, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(255, 215, 0, 0.15) 0%, transparent 45%);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
@@ -40,38 +45,53 @@
 
         .container {
             background: var(--card-bg);
-            padding: 35px 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--purple-glow);
+            border: 1px solid rgba(255, 215, 0, 0.25);
             width: 100%;
             max-width: 440px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--gold-primary), var(--purple-primary));
         }
 
         .brand-header {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .brand-title {
             margin: 0;
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #5865f2, #99aab5);
+            font-size: 30px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-primary) 0%, #ffffff 50%, var(--purple-hover) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
+            text-shadow: 0 0 15px var(--gold-glow);
+            letter-spacing: 1.5px;
         }
 
         .subtitle {
             color: var(--subtext-color);
             font-size: 13px;
-            margin-top: 6px;
+            margin-top: 8px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             text-align: right;
         }
 
@@ -79,19 +99,15 @@
             display: block;
             margin-bottom: 8px;
             font-size: 13px;
-            font-weight: 600;
-            color: var(--subtext-color);
-        }
-
-        .input-wrapper {
-            position: relative;
+            font-weight: 700;
+            color: var(--gold-primary);
         }
 
         input, select {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 13px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
             background: var(--input-bg);
             color: var(--text-color);
             font-size: 14px;
@@ -99,14 +115,14 @@
         }
 
         input:focus, select:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.25);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 12px var(--gold-glow);
         }
 
         select {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23949ba4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: left 12px center;
             background-size: 16px;
@@ -114,22 +130,25 @@
 
         button {
             width: 100%;
-            padding: 13px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             border: none;
-            background: var(--accent-color);
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple-primary), #5a189a);
+            color: var(--gold-primary);
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
             margin-top: 10px;
-            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+            box-shadow: 0 4px 15px var(--purple-glow);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            letter-spacing: 0.5px;
         }
 
         button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(88, 101, 242, 0.4);
+            background: linear-gradient(135deg, var(--purple-hover), var(--purple-primary));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--purple-glow), 0 0 10px var(--gold-glow);
+            color: #ffffff;
         }
 
         button:active {
@@ -139,31 +158,31 @@
         .status {
             margin-top: 20px;
             padding: 12px 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             display: none;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             animation: fadeIn 0.3s ease;
         }
 
-        .success { background: rgba(35, 165, 90, 0.15); color: var(--success-color); border: 1px solid var(--success-color); display: block; }
-        .error { background: rgba(242, 63, 67, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; }
-        .info { background: rgba(240, 178, 50, 0.15); color: var(--warning-color); border: 1px solid var(--warning-color); display: block; }
+        .success { background: rgba(0, 255, 135, 0.1); color: var(--success-color); border: 1px solid var(--success-color); display: block; box-shadow: 0 0 10px rgba(0, 255, 135, 0.2); }
+        .error { background: rgba(255, 0, 85, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; box-shadow: 0 0 10px rgba(255, 0, 85, 0.2); }
+        .info { background: rgba(255, 215, 0, 0.1); color: var(--gold-primary); border: 1px solid var(--gold-primary); display: block; box-shadow: 0 0 10px var(--gold-glow); }
 
         .footer {
             margin-top: 30px;
             color: var(--subtext-color);
             font-size: 13px;
             text-align: center;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         .footer b {
-            color: var(--text-color);
+            color: var(--gold-primary);
         }
 
         .links-container {
-            margin-top: 10px;
+            margin-top: 12px;
             display: flex;
             justify-content: center;
             gap: 12px;
@@ -172,21 +191,23 @@
         .btn-link {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            color: var(--text-color);
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(138, 43, 226, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: #ffffff;
             text-decoration: none;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .btn-link:hover {
-            background: rgba(88, 101, 242, 0.15);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
+            background: var(--purple-primary);
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+            box-shadow: 0 0 12px var(--purple-glow);
+            transform: translateY(-2px);
         }
 
         @keyframes fadeIn {
@@ -199,7 +220,7 @@
 
 <div class="container">
     <div class="brand-header">
-        <h1 class="brand-title"><i class="fa-solid fa-store"></i> SFREM STORE</h1>
+        <h1 class="brand-title"><i class="fa-solid fa-crown" style="color: var(--gold-primary);"></i> SFREM STORE</h1>
         <div class="subtitle">منصة أدوات ديسكورد الشاملة والاحترافية</div>
     </div>
 
@@ -238,10 +259,10 @@
     تم برمجة هذا الموقع بواسطة المبرمج علي (Sefirem)<br>
     <div class="links-container">
         <a class="btn-link" href="https://discord.com/users/a5mi" target="_blank">
-            <i class="fa-brands fa-discord"></i> حسابي (a5mi)
+            <i class="fa-brands fa-discord" style="color: var(--gold-primary);"></i> حسابي (a5mi)
         </a>
         <a class="btn-link" href="https://discord.gg/sfrem" target="_blank">
-            <i class="fa-solid fa-server"></i> سيرفرنا (sfrem)
+            <i class="fa-solid fa-server" style="color: var(--gold-primary);"></i> سيرفرنا (sfrem)
         </a>
     </div>
 </div>
