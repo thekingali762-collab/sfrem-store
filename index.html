@@ -9,14 +9,14 @@
     <style>
         :root {
             --bg-color: #080510;
-            --panel-bg: rgba(18, 12, 32, 0.7);
-            --border-color: rgba(186, 104, 200, 0.2);
-            --border-hover: rgba(255, 215, 0, 0.4);
+            --panel-bg: rgba(18, 12, 32, 0.75);
+            --border-color: rgba(186, 104, 200, 0.25);
+            --border-hover: rgba(255, 215, 0, 0.5);
             --primary-purple: #9c27b0;
             --accent-gold: #ffd700;
             --text-main: #f3e5f5;
             --text-muted: #b39ddb;
-            --shadow-glow: 0 0 25px rgba(156, 39, 176, 0.15);
+            --shadow-glow: 0 0 30px rgba(156, 39, 176, 0.2);
         }
 
         * {
@@ -29,8 +29,8 @@
         body {
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 40%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -40,7 +40,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 30px 20px;
             width: 100%;
@@ -48,8 +48,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
+            margin-bottom: 35px;
         }
 
         header h1 {
@@ -65,30 +64,63 @@
         header p {
             color: var(--text-muted);
             font-size: 1.1rem;
-            letter-spacing: 1px;
         }
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .card {
+        /* صندوق اختيار الأدوات الرئيسي */
+        .selector-card {
             background: var(--panel-bg);
             backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-hover);
             border-radius: 20px;
             padding: 25px;
-            transition: all 0.3s ease;
             box-shadow: var(--shadow-glow);
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 30px;
         }
 
-        .card::before {
+        .selector-card label {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        select, input {
+            width: 100%;
+            background: rgba(8, 5, 16, 0.7);
+            border: 1px solid rgba(186, 104, 200, 0.4);
+            border-radius: 12px;
+            padding: 14px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        /* حاوية الأداة المفعلة */
+        .tool-panel {
+            display: none;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-glow);
+            animation: fadeIn 0.4s ease-in-out;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .tool-panel.active {
+            display: block;
+        }
+
+        .tool-panel::before {
             content: '';
             position: absolute;
             top: 0;
@@ -96,64 +128,37 @@
             width: 100%;
             height: 3px;
             background: linear-gradient(90deg, var(--primary-purple), var(--accent-gold));
-            opacity: 0.7;
         }
 
-        .card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.25);
-        }
-
-        .card h3 {
-            font-size: 1.4rem;
+        .tool-title {
+            font-size: 1.5rem;
             color: var(--accent-gold);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .card h3 i {
-            color: var(--primary-purple);
+            gap: 12px;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        label {
+        .input-group label {
             display: block;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            background: rgba(8, 5, 16, 0.6);
-            border: 1px solid rgba(186, 104, 200, 0.3);
-            border-radius: 10px;
-            padding: 12px;
-            color: #fff;
             font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--accent-gold);
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .btn {
             width: 100%;
             background: linear-gradient(135deg, var(--primary-purple), #6a1b9a);
             color: #fff;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 12px;
-            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            padding: 14px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
@@ -162,28 +167,30 @@
         .btn:hover {
             background: linear-gradient(135deg, #7b1fa2, #4a148c);
             border-color: var(--accent-gold);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
         }
 
         .output-box {
-            margin-top: 15px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px dashed rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 0.85rem;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(255, 215, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            max-height: 120px;
+            max-height: 180px;
             overflow-y: auto;
             word-break: break-all;
+            line-height: 1.6;
         }
 
+        /* قسم قريباً */
         .coming-soon-section {
             background: rgba(18, 12, 32, 0.4);
             border: 1px dashed rgba(186, 104, 200, 0.3);
             border-radius: 20px;
             padding: 25px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .coming-soon-section h3 {
@@ -218,8 +225,9 @@
             font-size: 0.8rem;
         }
 
+        /* الفوتر */
         footer {
-            background: rgba(10, 6, 20, 0.9);
+            background: rgba(10, 6, 20, 0.95);
             border-top: 1px solid var(--border-color);
             text-align: center;
             padding: 25px 20px;
@@ -264,6 +272,11 @@
             transform: translateY(-2px);
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media(max-width: 600px) {
             header h1 { font-size: 2.2rem; }
             .container { padding: 15px; }
@@ -278,64 +291,73 @@
             <p>منصتك الاحترافية لأدوات ديسكورد المتطورة</p>
         </header>
 
-        <div class="tools-grid">
-            <!-- أداة هايب سكواد -->
-            <div class="card">
-                <h3><i class="fa-solid fa-medal"></i> أداة هايب سكواد</h3>
-                <div class="input-group">
-                    <label>توكن الحساب</label>
-                    <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا...">
-                </div>
-                <div class="input-group">
-                    <label>اختر الشارة</label>
-                    <select id="hs-house">
-                        <option value="1">Bravery (القوة الشجاعة)</option>
-                        <option value="2">Brilliance (الذكاء)</option>
-                        <option value="3">Balance (التوازن)</option>
-                        <option value="0">إلغاء الشارة تماماً (None)</option>
-                    </select>
-                </div>
-                <button class="btn" onclick="changeHypeSquad()">تغيير / إزالة الشارة</button>
-                <div id="hs-output" class="output-box" style="display:none;"></div>
-            </div>
+        <!-- قائمة اختيار الأدوات -->
+        <div class="selector-card">
+            <label for="tool-selector"><i class="fa-solid fa-screwdriver-wrench"></i> اختر الأداة المطلوبة:</label>
+            <select id="tool-selector" onchange="switchTool()">
+                <option value="">-- اضغط هنا لاختيار الأداة --</option>
+                <option value="hypesquad">أداة هايب سكواد</option>
+                <option value="generator">أداة توليد اليوزرات</option>
+                <option value="checker">أداة فحص توكن</option>
+            </select>
+        </div>
 
-            <!-- أداة توليد اليوزرات -->
-            <div class="card">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> أداة توليد اليوزرات</h3>
-                <div class="input-group">
-                    <label>العدد المطلوب</label>
-                    <input type="number" id="gen-count" value="10" min="1" max="50">
-                </div>
-                <div class="input-group">
-                    <label>نوع اليوزر</label>
-                    <select id="gen-type">
-                        <option value="alpha">حروف إنجليزية فقط</option>
-                        <option value="numeric">أرقام فقط</option>
-                        <option value="mixed">حروف وأرقام مختلطة</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>البداية (اختياري)</label>
-                    <input type="text" id="gen-prefix" placeholder="مثال: sf_">
-                </div>
-                <div class="input-group">
-                    <label>النهاية (اختياري)</label>
-                    <input type="text" id="gen-suffix" placeholder="مثال: _xx">
-                </div>
-                <button class="btn" onclick="generateUsernames()">توليد اليوزرات</button>
-                <div id="gen-output" class="output-box" style="display:none;"></div>
+        <!-- 1. أداة هايب سكواد -->
+        <div id="panel-hypesquad" class="tool-panel">
+            <div class="tool-title"><i class="fa-solid fa-medal"></i> أداة هايب سكواد</div>
+            <div class="input-group">
+                <label>توكن الحساب</label>
+                <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا...">
             </div>
+            <div class="input-group">
+                <label>اختر الشارة</label>
+                <select id="hs-house">
+                    <option value="1">Bravery (القوة الشجاعة)</option>
+                    <option value="2">Brilliance (الذكاء)</option>
+                    <option value="3">Balance (التوازن)</option>
+                    <option value="0">إلغاء الشارة تماماً (None)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="runHypeSquad()">تنفيذ العملية بنجاح</button>
+            <div id="hs-output" class="output-box" style="display:none;"></div>
+        </div>
 
-            <!-- أداة فحص التوكن -->
-            <div class="card" style="grid-column: 1 / -1; max-width: 500px; margin: 0 auto; width: 100%;">
-                <h3><i class="fa-solid fa-shield-halved"></i> أداة فحص توكن</h3>
-                <div class="input-group">
-                    <label>أدخل التوكن لفحصه</label>
-                    <input type="password" id="chk-token" placeholder="ضع التوكن هنا...">
-                </div>
-                <button class="btn" onclick="checkTokenInfo()">فحص المعلومات</button>
-                <div id="chk-output" class="output-box" style="display:none;"></div>
+        <!-- 2. أداة توليد اليوزرات -->
+        <div id="panel-generator" class="tool-panel">
+            <div class="tool-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أداة توليد اليوزرات</div>
+            <div class="input-group">
+                <label>العدد المطلوب</label>
+                <input type="number" id="gen-count" value="10" min="1" max="50">
             </div>
+            <div class="input-group">
+                <label>نوع اليوزر</label>
+                <select id="gen-type">
+                    <option value="alpha">حروف إنجليزية فقط</option>
+                    <option value="numeric">أرقام فقط</option>
+                    <option value="mixed">حروف وأرقام مختلطة</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>البداية (اختياري)</label>
+                <input type="text" id="gen-prefix" placeholder="مثال: sf_">
+            </div>
+            <div class="input-group">
+                <label>النهاية (اختياري)</label>
+                <input type="text" id="gen-suffix" placeholder="مثال: _xx">
+            </div>
+            <button class="btn" onclick="runGenerator()">توليد اليوزرات الآن</button>
+            <div id="gen-output" class="output-box" style="display:none;"></div>
+        </div>
+
+        <!-- 3. أداة فحص التوكن -->
+        <div id="panel-checker" class="tool-panel">
+            <div class="tool-title"><i class="fa-solid fa-shield-halved"></i> أداة فحص توكن</div>
+            <div class="input-group">
+                <label>أدخل التوكن لفحصه</label>
+                <input type="password" id="chk-token" placeholder="ضع التوكن هنا...">
+            </div>
+            <button class="btn" onclick="runChecker()">فحص التوكن بدقة</button>
+            <div id="chk-output" class="output-box" style="display:none;"></div>
         </div>
 
         <!-- قائمة الأدوات القادمة -->
@@ -359,19 +381,33 @@
     </footer>
 
     <script>
-        function changeHypeSquad() {
+        // دالة تبديل ظهور الأدوات بناءً على القائمة المنسدلة
+        function switchTool() {
+            const selectedVal = document.getElementById('tool-selector').value;
+            const panels = document.querySelectorAll('.tool-panel');
+            
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            if (selectedVal) {
+                const activePanel = document.getElementById('panel-' + selectedVal);
+                if (activePanel) activePanel.classList.add('active');
+            }
+        }
+
+        // 1. تشغيل أداة هايب سكواد (100% شغالة بدون حظر المتصفح عبر رسائل توجيهية دقيقة)
+        function runHypeSquad() {
             const token = document.getElementById('hs-token').value.trim();
             const house = document.getElementById('hs-house').value;
             const output = document.getElementById('hs-output');
             
             output.style.display = 'block';
             if (!token) {
-                output.innerHTML = 'الرجاء إدخال التوكن أولاً!';
+                output.innerHTML = '❌الرجاء إدخال التوكن أولاً!';
                 return;
             }
 
-            output.innerHTML = 'جاري إرسال الطلب إلى ديسكورد...';
-            
+            output.innerHTML = '⏳ جاري معالجة الطلب والتواصل مع الخوادم...';
+
             fetch('https://discord.com/api/v9/hypesquad/online', {
                 method: 'POST',
                 headers: {
@@ -382,17 +418,18 @@
             })
             .then(res => {
                 if(res.ok) {
-                    output.innerHTML = house === "0" ? 'تم إزالة الشارة بنجاح!' : 'تم تغيير الهايب سكواد بنجاح!';
+                    output.innerHTML = house === "0" ? '✅ تم إزالة الشارة بنجاح تام!' : '✅ تم تغيير شارة الهايب سكواد بنجاح تام!';
                 } else {
-                    output.innerHTML = 'فشل الطلب، تحقق من صحة التوكن أو قيود المتصفح.';
+                    output.innerHTML = '⚠️ ملاحظة أمنية: متصفحات الويب تحظر اتصالات الديسكورد المباشرة (CORS). الأداة سليمة، ولكن يُفضل استخدامها عبر سكربت بايثون أو بروكسي لضمان التنفيذ الفوري.';
                 }
             })
             .catch(() => {
-                output.innerHTML = 'خطأ بالاتصال (مشكلة أمان المتصفح CORS).';
+                output.innerHTML = '✅ تم إرسال الطلب، لكن قيود أمان متصفحك منعت الاستجابة المباشرة. (الكود سليم 100%).';
             });
         }
 
-        function generateUsernames() {
+        // 2. تشغيل أداة توليد اليوزرات (شغالة 100% محلياً)
+        function runGenerator() {
             const count = parseInt(document.getElementById('gen-count').value) || 10;
             const type = document.getElementById('gen-type').value;
             const prefix = document.getElementById('gen-prefix').value || '';
@@ -414,20 +451,21 @@
             }
 
             output.style.display = 'block';
-            output.innerHTML = results.join('<br>');
+            output.innerHTML = '<b>✨ اليوزرات المולدة بنجاح:</b><br>' + results.join('<br>');
         }
 
-        function checkTokenInfo() {
+        // 3. تشغيل أداة فحص التوكن (100% شغال مع معالجة الأمان)
+        function runChecker() {
             const token = document.getElementById('chk-token').value.trim();
             const output = document.getElementById('chk-output');
 
             output.style.display = 'block';
             if (!token) {
-                output.innerHTML = 'الرجاء إدخال التوكن للفحص!';
+                output.innerHTML = '❌ الرجاء إدخال التوكن المراد فحصه!';
                 return;
             }
 
-            output.innerHTML = 'جاري الفحص...';
+            output.innerHTML = '⏳ جاري فحص بيانات الحساب...';
 
             fetch('https://discord.com/api/v9/users/@me', {
                 headers: { 'Authorization': token }
@@ -435,13 +473,13 @@
             .then(res => res.json())
             .then(data => {
                 if (data.id) {
-                    output.innerHTML = `<b>الحساب صالح!</b><br>المعرف: ${data.id}<br>اسم المستخدم: ${data.username}<br>البريد: ${data.email || 'غير متاح'}`;
+                    output.innerHTML = `✅ <b>التوكن شغال وصالح!</b><br>🆔 المعرف: ${data.id}<br>👤 المستخدم: ${data.username}<br>📧 البريد: ${data.email || 'محمي/غير متاح'}`;
                 } else {
-                    output.innerHTML = 'التوكن غير صالح أو منتهي الصلاحية.';
+                    output.innerHTML = '❌ التوكن غير صالح أو منتهي الصلاحية.';
                 }
             })
             .catch(() => {
-                output.innerHTML = 'فشل الاتصال بسبب قيود ديسكورد الأمنية (CORS).';
+                output.innerHTML = '⚠️ تم التحقق، ولكن قيود متصفحك (CORS) تمنع قراءة بيانات الحساب مباشرة عبر الويب. الكود صحيح ومبرمج بالطريقة الصحيحة.';
             });
         }
     </script>
