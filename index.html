@@ -3,489 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SFREM STORE - أدوات ديسكورد</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>SFREM STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0b0712;
-            --card-bg: rgba(22, 13, 36, 0.85);
-            --gold-primary: #ffd700;
-            --gold-secondary: #ffb700;
-            --gold-glow: rgba(255, 215, 0, 0.4);
-            --purple-primary: #8a2be2;
-            --purple-hover: #9d4edf;
-            --purple-glow: rgba(138, 43, 226, 0.5);
-            --text-color: #ffffff;
-            --subtext-color: #d1c4e9;
-            --input-bg: rgba(10, 5, 18, 0.9);
-            --success-color: #00ff87;
-            --danger-color: #ff0055;
+            --bg-color: #080510;
+            --panel-bg: rgba(18, 12, 32, 0.7);
+            --border-color: rgba(186, 104, 200, 0.2);
+            --border-hover: rgba(255, 215, 0, 0.4);
+            --primary-purple: #9c27b0;
+            --accent-gold: #ffd700;
+            --text-main: #f3e5f5;
+            --text-muted: #b39ddb;
+            --shadow-glow: 0 0 25px rgba(156, 39, 176, 0.15);
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(138, 43, 226, 0.25) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(255, 215, 0, 0.15) 0%, transparent 45%);
-            color: var(--text-color);
+                radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            justify-content: space-between;
+            overflow-x: hidden;
         }
 
         .container {
-            background: var(--card-bg);
-            padding: 35px 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--purple-glow);
-            border: 1px solid rgba(255, 215, 0, 0.25);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
             width: 100%;
-            max-width: 480px;
+        }
+
+        header {
             text-align: center;
-            backdrop-filter: blur(12px);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--text-main), var(--accent-gold), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
             position: relative;
             overflow: hidden;
         }
 
-        .container::before {
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--purple-primary), var(--gold-primary), var(--purple-primary));
+            background: linear-gradient(90deg, var(--primary-purple), var(--accent-gold));
+            opacity: 0.7;
         }
 
-        .brand-header {
-            margin-bottom: 25px;
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(156, 39, 176, 0.25);
         }
 
-        .brand-title {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--gold-primary) 0%, #ffffff 50%, var(--purple-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px var(--gold-glow);
-            letter-spacing: 1px;
+        .card h3 {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .subtitle {
-            color: var(--subtext-color);
-            font-size: 12px;
-            margin-top: 6px;
-            font-weight: 500;
+        .card h3 i {
+            color: var(--primary-purple);
         }
 
-        .form-group {
-            margin-bottom: 16px;
-            text-align: right;
+        .input-group {
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
             margin-bottom: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--gold-primary);
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 12px 14px;
+            background: rgba(8, 5, 16, 0.6);
+            border: 1px solid rgba(186, 104, 200, 0.3);
             border-radius: 10px;
-            border: 1px solid rgba(138, 43, 226, 0.4);
-            background: var(--input-bg);
-            color: var(--text-color);
-            font-size: 13px;
+            padding: 12px;
+            color: #fff;
+            font-size: 0.95krem;
             outline: none;
+            transition: border-color 0.3s;
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: monospace;
+        input:focus, select:focus {
+            border-color: var(--accent-gold);
         }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 12px var(--gold-glow);
-        }
-
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffd700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: left 12px center;
-            background-size: 16px;
-        }
-
-        button {
+        .btn {
             width: 100%;
-            padding: 13px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(135deg, var(--purple-primary), #5a189a);
-            color: var(--gold-primary);
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 8px;
-            box-shadow: 0 4px 15px var(--purple-glow);
+            background: linear-gradient(135deg, var(--primary-purple), #6a1b9a);
+            color: #fff;
             border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        button:hover {
-            background: linear-gradient(135deg, var(--purple-hover), var(--purple-primary));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--purple-glow), 0 0 10px var(--gold-glow);
-            color: #ffffff;
-        }
-
-        .tool-section {
-            display: none;
-        }
-
-        .active-tool {
-            display: block;
-        }
-
-        .status {
-            margin-top: 15px;
-            padding: 12px 15px;
+            padding: 12px;
             border-radius: 10px;
-            display: none;
-            font-size: 13px;
             font-weight: 700;
-            animation: fadeIn 0.3s ease;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
         }
 
-        .success { background: rgba(0, 255, 135, 0.1); color: var(--success-color); border: 1px solid var(--success-color); display: block; }
-        .error { background: rgba(255, 0, 85, 0.1); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; }
-        .info { background: rgba(255, 215, 0, 0.1); color: var(--gold-primary); border: 1px solid var(--gold-primary); display: block; }
+        .btn:hover {
+            background: linear-gradient(135deg, #7b1fa2, #4a148c);
+            border-color: var(--accent-gold);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+        }
 
         .output-box {
             margin-top: 15px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
             padding: 10px;
-            max-height: 160px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            max-height: 120px;
             overflow-y: auto;
-            text-align: left;
-            font-family: monospace;
-            font-size: 12px;
-            color: #00ff87;
-            white-space: pre-wrap;
             word-break: break-all;
         }
 
-        .footer {
-            margin-top: 25px;
-            color: var(--subtext-color);
-            font-size: 12px;
-            text-align: center;
-            line-height: 1.8;
+        /* قريباً قسم */
+        .coming-soon-section {
+            background: rgba(18, 12, 32, 0.4);
+            border: 1px dashed rgba(186, 104, 200, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 40px;
         }
 
-        .footer b {
-            color: var(--gold-primary);
-        }
-
-        .links-container {
-            margin-top: 10px;
+        .coming-soon-section h3 {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             display: flex;
-            justify-content: center;
+            align-items: center;
             gap: 10px;
         }
 
-        .btn-link {
-            display: inline-flex;
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(156, 39, 176, 0.15);
+            border: 1px solid rgba(186, 104, 200, 0.3);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            background: rgba(138, 43, 226, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 11px;
+            gap: 8px;
+        }
+
+        .tag i {
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+        }
+
+        /* الفوتر */
+        footer {
+            background: rgba(10, 6, 20, 0.9);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer .dev-name {
+            color: var(--accent-gold);
             font-weight: 700;
         }
 
-        .btn-link:hover {
-            background: var(--purple-primary);
-            color: var(--gold-primary);
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: var(--text-main);
+            background: rgba(156, 39, 176, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-purple);
+            border-color: var(--accent-gold);
+            color: #fff;
             transform: translateY(-2px);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media(max-width: 600px) {
+            header h1 { font-size: 2.2rem; }
+            .container { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="brand-header">
-        <h1 class="brand-title"><i class="fa-solid fa-crown" style="color: var(--gold-primary);"></i> SFREM STORE</h1>
-        <div class="subtitle">منصة أدوات ديسكورد الشاملة والاحترافية</div>
-    </div>
+    <div class="container">
+        <header>
+            <h1>SFREM STORE</h1>
+            <p>منصتك الاحترافية لأدوات ديسكورد المتطورة</p>
+        </header>
 
-    <div class="form-group">
-        <label for="toolSelect"><i class="fa-solid fa-toolbox"></i> اختر الأداة المطلوبة:</label>
-        <select id="toolSelect" onchange="switchTool()">
-            <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
-            <option value="token_checker">فحص التوكنات والنيترو 🔍</option>
-            <option value="user_gen">توليد يوزرات ديسكورد (ثلاثية، رباعية) 🎯</option>
-            <option value="probot_coming" disabled>أداة تلفيل برو بوت (قريباً 🚀)</option>
-            <option value="multi_edit_coming" disabled>أداة تغيير المعلومات (قريباً 🚀)</option>
-            <option value="servers_coming" disabled>أداة نسخ سيرفرات (قريباً 🚀)</option>
-        </select>
-    </div>
-
-    <!-- أداة الهايب سكواد -->
-    <div id="hypesquadTool" class="tool-section active-tool">
-        <div class="form-group">
-            <label for="token"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
-            <input type="password" id="token" placeholder="ضع التوكن الخاص بك هنا..." required>
-        </div>
-
-        <div class="form-group">
-            <label for="house"><i class="fa-solid fa-shield-halved"></i> اختر البيت أو الإجراء:</label>
-            <select id="house">
-                <option value="1">Bravery 🟣 (بيت الشجاعة)</option>
-                <option value="2">Brilliance 🔴 (بيت البراعة)</option>
-                <option value="3">Balance 🟢 (بيت التوازن)</option>
-                <option value="leave">❌ إزالة / إلغاء الشارة نهائياً</option>
-            </select>
-        </div>
-
-        <button onclick="handleHypeSquad()"><i class="fa-solid fa-bolt"></i> تنفيذ الإجراء الآن</button>
-    </div>
-
-    <!-- أداة فحص التوكنات -->
-    <div id="tokenCheckerTool" class="tool-section">
-        <div class="form-group">
-            <label for="tokensList"><i class="fa-solid fa-list-check"></i> التوكنات المراد فحصها (توكن بکل سطر):</label>
-            <textarea id="tokensList" placeholder="أدخل التوكنات هنا لفحص معلوماتها..."></textarea>
-        </div>
-
-        <button onclick="checkTokens()"><i class="fa-solid fa-magnifying-glass-chart"></i> بدء فحص التوكنات</button>
-        <div id="checkerOutput" class="output-box" style="display: none;"></div>
-    </div>
-
-    <!-- أداة توليد اليوزرات -->
-    <div id="userGenTool" class="tool-section">
-        <div class="form-group">
-            <label for="userType"><i class="fa-solid fa-font"></i> نوع اليوزر المطلوب:</label>
-            <select id="userType">
-                <option value="3">يوزرات ثلاثية (3 أحرف)</option>
-                <option value="4" selected>يوزرات رباعية (4 أحرف)</option>
-                <option value="5">يوزرات خماسية (5 أحرف)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="genAmount"><i class="fa-solid fa-hashtag"></i> عدد اليوزرات المراد توليدها:</label>
-            <input type="number" id="genAmount" value="20" min="1" max="500">
-        </div>
-
-        <div style="display: flex; gap: 8px;">
-            <div class="form-group" style="flex: 1;">
-                <label for="prefixPattern">البداية (اختياري):</label>
-                <input type="text" id="prefixPattern" placeholder="مثلاً: a">
+        <div class="tools-grid">
+            <!-- أداة هايباسكواد -->
+            <div class="card">
+                <h3><i class="fa-solid fasigns-post"></i> مبدل HypeSquad</h3>
+                <div class="input-group">
+                    <label>توكن الحساب</label>
+                    <input type="password" id="hs-token" placeholder="أدخل توكن حسابك هنا...">
+                </div>
+                <div class="input-group">
+                    <label>اختر الشارة</label>
+                    <select id="hs-house">
+                        <option value="1">Bravery (القوة الشجاعة)</option>
+                        <option value="2">Brilliance (الذكاء)</option>
+                        <option value="3">Balance (التوازن)</option>
+                        <option value="0">إلغاء الشارة تماماً (None)</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="changeHypeSquad()">تغيير / إزالة الشارة</button>
+                <div id="hs-output" class="output-box" style="display:none;"></div>
             </div>
-            <div class="form-group" style="flex: 1;">
-                <label for="suffixPattern">النهاية (اختياري):</label>
-                <input type="text" id="suffixPattern" placeholder="مثلاً: 7">
+
+            <!-- أداة توليد اليوزرات -->
+            <div class="card">
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> مولد اليوزرات</h3>
+                <div class="input-group">
+                    <label>العدد المطلوب</label>
+                    <input type="number" id="gen-count" value="10" min="1" max="50">
+                </div>
+                <div class="input-group">
+                    <label>نوع اليوزر</label>
+                    <select id="gen-type">
+                        <option value="alpha">حروف إنجليزية فقط</option>
+                        <option value="numeric">أرقام فقط</option>
+                        <option value="mixed">حروف وأرقام مختلطة</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>البداية (اختياري)</label>
+                    <input type="text" id="gen-prefix" placeholder="مثال: sf_">
+                </div>
+                <div class="input-group">
+                    <label>النهاية (اختياري)</label>
+                    <input type="text" id="gen-suffix" placeholder="مثال: _xx">
+                </div>
+                <button class="btn" onclick="generateUsernames()">توليد اليوزرات</button>
+                <div id="gen-output" class="output-box" style="display:none;"></div>
+            </div>
+
+            <!-- أداة فحص التوكن -->
+            <div class="card" style="grid-column: 1 / -1; max-width: 500px; margin: 0 auto; width: 100%;">
+                <h3><i class="fa-solid fa-shield-halved"></i> فحص التوكن</h3>
+                <div class="input-group">
+                    <label>أدخل التوكن لفحصه</label>
+                    <input type="password" id="chk-token" placeholder="ضع التوكن هنا...">
+                </div>
+                <button class="btn" onclick="checkTokenInfo()">فحص المعلومات</button>
+                <div id="chk-output" class="output-box" style="display:none;"></div>
             </div>
         </div>
 
-        <button onclick="generateUsernames()"><i class="fa-solid fa-wand-magic-sparkles"></i> توليد اليوزرات الآن</button>
-        <button onclick="copyGeneratedUsers()" style="background: linear-gradient(135deg, #10b981, #059669); color:#fff; display:none;" id="copyBtn"><i class="fa-solid fa-copy"></i> نسخ كل اليوزرات</button>
-
-        <div id="userOutput" class="output-box" style="display: none;"></div>
+        <!-- قائمة الأدوات القادمة -->
+        <div class="coming-soon-section">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> أدوات يتم إضافتها قريباً</h3>
+            <div class="tags-container">
+                <div class="tag"><i class="fa-solid fa-circle"></i> أداة نسخ سيرفرات</div>
+                <div class="tag"><i class="fa-solid fa-circle"></i> أداة بوستات</div>
+                <div class="tag"><i class="fa-solid fa-circle"></i> أداة تغيير معلومات توكن</div>
+                <div class="tag"><i class="fa-solid fa-circle"></i> أداة توليد توكنات</div>
+            </div>
+        </div>
     </div>
 
-    <div id="status" class="status"></div>
-</div>
+    <footer>
+        <p>تم برمجة هذا الموقع بواسطة المبرمج علي <span class="dev-name">(sfrem)</span></p>
+        <div class="social-links">
+            <a href="https://discord.com/users/a5mi" target="_blank"><i class="fa-brands fa-discord"></i> حساب ديسكورد</a>
+            <a href="https://discord.gg/sfrem" target="_blank"><i class="fa-solid fa-server"></i> سيرفر ديسكورد</a>
+        </div>
+    </footer>
 
-<div class="footer">
-    جميع الحقوق محفوظة © <b>SFREM STORE</b><br>
-    منصة أدوات ديسكورد الرسمية<br>
-    <div class="links-container">
-        <a class="btn-link" href="https://discord.com/users/a5mi" target="_blank">
-            <i class="fa-brands fa-discord" style="color: var(--gold-primary);"></i> حسابي الشخصي
-        </a>
-        <a class="btn-link" href="https://discord.gg/sfrem" target="_blank">
-            <i class="fa-solid fa-server" style="color: var(--gold-primary);"></i> سيرفرنا الرسمي
-        </a>
-    </div>
-</div>
-
-<script>
-function switchTool() {
-    const selected = document.getElementById('toolSelect').value;
-    document.getElementById('hypesquadTool').classList.remove('active-tool');
-    document.getElementById('tokenCheckerTool').classList.remove('active-tool');
-    document.getElementById('userGenTool').classList.remove('active-tool');
-    document.getElementById('status').style.display = 'none';
-
-    if (selected === 'hypesquad') {
-        document.getElementById('hypesquadTool').classList.add('active-tool');
-    } else if (selected === 'token_checker') {
-        document.getElementById('tokenCheckerTool').classList.add('active-tool');
-    } else if (selected === 'user_gen') {
-        document.getElementById('userGenTool').classList.add('active-tool');
-    }
-}
-
-async function handleHypeSquad() {
-    const token = document.getElementById('token').value.trim();
-    const house = document.getElementById('house').value;
-    const statusDiv = document.getElementById('status');
-
-    if (!token) {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن أولاً!';
-        return;
-    }
-
-    statusDiv.className = "status info";
-    statusDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تنفيذ الطلب...';
-
-    try {
-        let response;
-        if (house === 'leave') {
-            response = await fetch('https://discord.com/api/v9/hypesquad/online', {
-                method: 'DELETE',
-                headers: { 'Authorization': token, 'Content-Type': 'application/json' }
-            });
-        } else {
-            response = await fetch('https://discord.com/api/v9/hypesquad/online', {
-                method: 'POST',
-                headers: { 'Authorization': token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ house_id: house })
-            });
-        }
-
-        if (response.ok || response.status === 204) {
-            statusDiv.className = "status success";
-            statusDiv.innerHTML = house === 'leave' 
-                ? '<i class="fa-solid fa-circle-check"></i> تم إزالة شارة الـ HypeSquad بنجاح!' 
-                : '<i class="fa-solid fa-circle-check"></i> تم تغيير الـ HypeSquad بنجاح! 🎉';
-        } else {
-            statusDiv.className = "status error";
-            statusDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> فشل الإجراء! تأكد من صحة التوكن.';
-        }
-    } catch (err) {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-wifi"></i> حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.';
-    }
-}
-
-async function checkTokens() {
-    const tokensText = document.getElementById('tokensList').value.trim();
-    const outputBox = document.getElementById('checkerOutput');
-    const statusDiv = document.getElementById('status');
-
-    if (!tokensText) {
-        statusDiv.className = "status error";
-        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال توكن واحد على الأقل!';
-        return;
-    }
-
-    const tokens = tokensText.split('\n').map(t => t.trim()).filter(t => t !== '');
-    statusDiv.className = "status info";
-    statusDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري فحص ${tokens.length} توكن...`;
-    outputBox.style.display = 'block';
-    outputBox.innerText = "جاري جلب المعلومات من ديسكورد...\n";
-
-    let results = "";
-    for (let i = 0; i < tokens.length; i++) {
-        const token = tokens[i];
-        try {
-            const res = await fetch('https://discord.com/api/v9/users/@me', {
-                headers: { 'Authorization': token }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                
-                let nitroStatus = "عادي (بدون نترو)";
-                if (data.premium_type === 1) nitroStatus = "Nitro Classic 🚀";
-                if (data.premium_type === 2) nitroStatus = "Nitro Boost 🚀✨";
-
-                results += `[✓] الحساب ${i+1}: ${data.username}#(${data.discriminator || '0'}) | النيترو: ${nitroStatus}\n`;
-            } else {
-                results += `[✗] الحساب ${i+1}: توكن غير صالح أو مسكر (Invalid Token)\n`;
+    <script>
+        // دالة الهايباسكواد
+        function changeHypeSquad() {
+            const token = document.getElementById('hs-token').value.trim();
+            const house = document.getElementById('hs-house').value;
+            const output = document.getElementById('hs-output');
+            
+            output.style.display = 'block';
+            if (!token) {
+                output.innerHTML = 'الرجاء إدخال التوكن أولاً!';
+                return;
             }
-        } catch (e) {
-            results += `[!] الحساب ${i+1}: خطأ في الاتصال.\n`;
-        }
-    }
-    
-    outputBox.innerText = results;
-    statusDiv.className = "status success";
-    statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> اكتمل فحص التوكنات بنجاح!';
-}
 
-let generatedUsersList = [];
-
-function generateUsernames() {
-    const type = parseInt(document.getElementById('userType').value);
-    const amount = parseInt(document.getElementById('genAmount').value) || 20;
-    const prefix = document.getElementById('prefixPattern').value.trim();
-    const suffix = document.getElementById('suffixPattern').value.trim();
-    const outputBox = document.getElementById('userOutput');
-    const copyBtn = document.getElementById('copyBtn');
-    const statusDiv = document.getElementById('status');
-
-    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789._';
-    generatedUsersList = [];
-
-    for (let i = 0; i < amount; i++) {
-        let coreLength = type - prefix.length - suffix.length;
-        if (coreLength < 1) coreLength = 1;
-
-        let core = '';
-        for (let j = 0; j < coreLength; j++) {
-            core += chars.charAt(Math.floor(Math.random() * chars.length));
+            output.innerHTML = 'جاري إرسال الطلب إلى ديسكورد... (ملاحظة: قيود CORS تمنع الطلبات المباشرة من المتصفح أحياناً)';
+            
+            fetch('https://discord.com/api/v9/hypesquad/online', {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ house_id: parseInt(house) })
+            })
+            .then(res => {
+                if(res.ok) {
+                    output.innerHTML = house === "0" ? 'تم إزالة الشارة بنجاح!' : 'تم تغيير الهايباسكواد بنجاح!';
+                } else {
+                    output.innerHTML = 'فشل الطلب، تحقق من صحة التوكن أو جرب من بيئة خادم (Backend).';
+                }
+            })
+            .catch(err => {
+                output.innerHTML = 'خطأ بالاتصال (مشكلة أمان المتصفح CORS).';
+            });
         }
 
-        generatedUsersList.push(prefix + core + suffix);
-    }
+        // دالة توليد اليوزرات
+        function generateUsernames() {
+            const count = parseInt(document.getElementById('gen-count').value) || 10;
+            const type = document.getElementById('gen-type').value;
+            const prefix = document.getElementById('gen-prefix').value || '';
+            const suffix = document.getElementById('gen-suffix').value || '';
+            const output = document.getElementById('gen-output');
 
-    outputBox.style.display = 'block';
-    outputBox.innerText = generatedUsersList.join('\n');
-    copyBtn.style.display = 'block';
+            let chars = '';
+            if (type === 'alpha') chars = 'abcdefghijklmnopqrstuvwxyz';
+            else if (type === 'numeric') chars = '0123456789';
+            else chars = 'abcdefghijklmnopqrstuvwxyz0123456789_';
 
-    statusDiv.className = "status success";
-    statusDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i> تم توليد ${generatedUsersList.length} يوزر بنجاح!`;
-}
+            let results = [];
+            for (let i = 0; i < count; i++) {
+                let current = '';
+                for (let j = 0; j < 6; j++) {
+                    current += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                results.push(prefix + current + suffix);
+            }
 
-function copyGeneratedUsers() {
-    if (generatedUsersList.length === 0) return;
-    navigator.clipboard.writeText(generatedUsersList.join('\n')).then(() => {
-        const statusDiv = document.getElementById('status');
-        statusDiv.className = "status success";
-        statusDiv.innerHTML = '<i class="fa-solid fa-copy"></i> تم نسخ جميع اليوزرات إلى الحافظة!';
-    });
-}
-</script>
+            output.style.display = 'block';
+            output.innerHTML = results.join('<br>');
+        }
+
+        // دالة فحص التوكن
+        function checkTokenInfo() {
+            const token = document.getElementById('chk-token').value.trim();
+            const output = document.getElementById('chk-output');
+
+            output.style.display = 'block';
+            if (!token) {
+                output.innerHTML = 'الرجاء إدخال التوكن للفحص!';
+                return;
+            }
+
+            output.innerHTML = 'جاري الفحص...';
+
+            fetch('https://discord.com/api/v9/users/@me', {
+                headers: { 'Authorization': token }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.id) {
+                    output.innerHTML = `<b>الحساب صالح!</b><br>المعرف: ${data.id}<br>اسم المستخدم: ${data.username}#${data.discriminator || '0'}<br>البريد: ${data.email || 'غير متاح'}`;
+                } else {
+                    output.innerHTML = 'التوكن غير صالح أو منتهي الصلاحية.';
+                }
+            })
+            .catch(() => {
+                output.innerHTML = 'فشل الاتصال بسبب قيود ديسكورد الأمنية (CORS).';
+            });
+        }
+    </script>
 </body>
 </html>
