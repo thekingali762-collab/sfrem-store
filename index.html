@@ -242,9 +242,11 @@
         <label for="toolSelect"><i class="fa-solid fa-toolbox"></i> اختر الأداة المطلوبة:</label>
         <select id="toolSelect" onchange="switchTool()">
             <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
-            <option value="probot">أداة تلفيل برو بوت (ProBot Leveling) ⚡</option>
-            <option value="status_coming" disabled>تغيير حالة المستخدم (قريباً 🚀)</option>
-            <option value="other_coming" disabled>أدوات أخرى (قريباً 🔒)</option>
+            <option value="probot">أداة تلفيل برو بوت (كل 70 ثانية) ⚡</option>
+            <option value="status_changer">تغيير حالة الحساب الأساسية 🟢</option>
+            <option value="user_gen_coming" disabled>توليد يوزرات ديسكورد رباعية (قريباً 🚀)</option>
+            <option value="posts_coming" disabled>أداة بوستات (قريباً 🚀)</option>
+            <option value="servers_coming" disabled>أداة نسخ سيرفرات (قريباً 🚀)</option>
         </select>
     </div>
 
@@ -284,18 +286,38 @@
         <button class="btn-stop" onclick="stopProBot()"><i class="fa-solid fa-stop"></i> إيقاف التلفيل</button>
     </div>
 
+    <!-- أداة تغيير حالة الحساب -->
+    <div id="statusChangerTool" class="tool-section">
+        <div class="form-group">
+            <label for="statusToken"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
+            <input type="password" id="statusToken" placeholder="ضع التوكن الخاص بك هنا..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="presenceStatus"><i class="fa-solid fa-circle-dot"></i> حالة الحساب:</label>
+            <select id="presenceStatus">
+                <option value="online">متصل (Online)</option>
+                <option value="idle">خامل (Idle)</option>
+                <option value="dnd">مشغول (Do Not Disturb)</option>
+                <option value="invisible">غير متصل / مخفي (Invisible)</option>
+            </select>
+        </div>
+
+        <button onclick="updateUserStatus()"><i class="fa-solid fa-sliders"></i> تحديث الحالة الآن</button>
+    </div>
+
     <div id="status" class="status"></div>
 </div>
 
 <div class="footer">
     جميع الحقوق محفوظة © <b>SFREM STORE</b><br>
-    تم برمجة هذا الموقع بواسطة المبرمج علي (Sefirem)<br>
+    منصة أدوات ديسكورد الرسمية<br>
     <div class="links-container">
         <a class="btn-link" href="https://discord.com/users/a5mi" target="_blank">
-            <i class="fa-brands fa-discord" style="color: var(--gold-primary);"></i> حسابي (a5mi)
+            <i class="fa-brands fa-discord" style="color: var(--gold-primary);"></i> حسابي الشخصي
         </a>
         <a class="btn-link" href="https://discord.gg/sfrem" target="_blank">
-            <i class="fa-solid fa-server" style="color: var(--gold-primary);"></i> سيرفرنا (sfrem)
+            <i class="fa-solid fa-server" style="color: var(--gold-primary);"></i> سيرفرنا الرسمي
         </a>
     </div>
 </div>
@@ -305,12 +327,15 @@ function switchTool() {
     const selected = document.getElementById('toolSelect').value;
     document.getElementById('hypesquadTool').classList.remove('active-tool');
     document.getElementById('probotTool').classList.remove('active-tool');
+    document.getElementById('statusChangerTool').classList.remove('active-tool');
     document.getElementById('status').style.display = 'none';
 
     if (selected === 'hypesquad') {
         document.getElementById('hypesquadTool').classList.add('active-tool');
     } else if (selected === 'probot') {
         document.getElementById('probotTool').classList.add('active-tool');
+    } else if (selected === 'status_changer') {
+        document.getElementById('statusChangerTool').classList.add('active-tool');
     }
 }
 
@@ -359,7 +384,6 @@ async function handleHypeSquad() {
 }
 
 let probotInterval = null;
-
 const randomWords = [
     "مرحبا", "سلام عليكم", "كيفكم شباب", "منورين السيرفر", "يا هلا", 
     "أهلاً وسهلاً", "جمعة مباركة", "يسعد مساكم", "أحلى شباب", "تشرفت بالجميع",
@@ -384,10 +408,8 @@ function startProBot() {
     statusDiv.className = "status success";
     statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم تشغيل نظام التلفيل التلقائي (رسالة كل 70 ثانية)! ⚡';
 
-    // إرسال رسالة أولية مباشرة عند التشغيل
     sendProBotMessage(token, channelId);
 
-    // ضبط المؤقت على 70 ثانية (70000 ميلي ثانية)
     probotInterval = setInterval(() => {
         sendProBotMessage(token, channelId);
     }, 70000);
@@ -419,6 +441,45 @@ function stopProBot() {
     } else {
         statusDiv.className = "status error";
         statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> النظام غير مُشغّل أساساً!';
+    }
+}
+
+async function updateUserStatus() {
+    const token = document.getElementById('statusToken').value.trim();
+    const presenceStatus = document.getElementById('presenceStatus').value;
+    const statusDiv = document.getElementById('status');
+
+    if (!token) {
+        statusDiv.className = "status error";
+        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن أولاً!';
+        return;
+    }
+
+    statusDiv.className = "status info";
+    statusDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تحديث حالة الحساب...';
+
+    try {
+        const response = await fetch('https://discord.com/api/v9/users/@me/settings', {
+            method: 'PATCH',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: presenceStatus
+            })
+        });
+
+        if (response.ok || response.status === 200) {
+            statusDiv.className = "status success";
+            statusDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم تحديث الحالة بنجاح! 🟢';
+        } else {
+            statusDiv.className = "status error";
+            statusDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> فشل التحديث! تأكد من صحة التوكن.';
+        }
+    } catch (err) {
+        statusDiv.className = "status error";
+        statusDiv.innerHTML = '<i class="fa-solid fa-wifi"></i> حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.';
     }
 }
 </script>
