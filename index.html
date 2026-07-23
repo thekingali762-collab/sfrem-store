@@ -4,56 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SFREM STORE - أدوات ديسكورد</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #202225; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .container { background-color: #2f3136; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); width: 100%; max-width: 440px; text-align: center; }
-        h1 { margin-top: 0; margin-bottom: 5px; color: #5865f2; font-size: 26px; font-weight: bold; }
-        .subtitle { color: #b9bbbe; font-size: 14px; margin-bottom: 20px; }
-        label { display: block; text-align: right; margin: 12px 0 5px 0; font-size: 14px; color: #dcddde; }
-        input, select, button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: none; font-size: 15px; }
-        input { background: #40444b; color: #fff; border: 1px solid #202225; outline: none; }
-        select { background: #40444b; color: #fff; cursor: pointer; outline: none; }
-        button { background: #5865f2; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; }
-        button:hover { background: #4752c4; }
-        .tool-section { display: none; }
-        .active-tool { display: block; }
-        .status { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; font-weight: bold; font-size: 14px; }
-        .success { background: #3ba55d; color: #fff; display: block; }
-        .error { background: #ed4245; color: #fff; display: block; }
-        .info { background: #faa81a; color: #fff; display: block; }
-        .footer { margin-top: 25px; color: #dcddde; font-size: 13px; text-align: center; line-height: 1.8; }
-        .footer a { color: #00aff4; text-decoration: none; font-weight: bold; }
-        .footer a:hover { text-decoration: underline; }
-        .links-container { margin-top: 8px; display: flex; justify-content: center; gap: 15px; }
+        :root {
+            --bg-color: #1e1f22;
+            --card-bg: #2b2d31;
+            --input-bg: #111214;
+            --accent-color: #5865f2;
+            --accent-hover: #4752c4;
+            --text-color: #f2f3f5;
+            --subtext-color: #949ba4;
+            --success-color: #23a55a;
+            --danger-color: #f23f43;
+            --warning-color: #f0b232;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 10%, #2b2d31 0%, #1e1f22 70%);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 35px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-header {
+            margin-bottom: 25px;
+        }
+
+        .brand-title {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5865f2, #99aab5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: var(--subtext-color);
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: right;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--subtext-color);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.25);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23949ba4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 12px center;
+            background-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-color);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(88, 101, 242, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: none;
+            font-size: 14px;
+            font-weight: 600;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .success { background: rgba(35, 165, 90, 0.15); color: var(--success-color); border: 1px solid var(--success-color); display: block; }
+        .error { background: rgba(242, 63, 67, 0.15); color: var(--danger-color); border: 1px solid var(--danger-color); display: block; }
+        .info { background: rgba(240, 178, 50, 0.15); color: var(--warning-color); border: 1px solid var(--warning-color); display: block; }
+
+        .footer {
+            margin-top: 30px;
+            color: var(--subtext-color);
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .footer b {
+            color: var(--text-color);
+        }
+
+        .links-container {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-link:hover {
+            background: rgba(88, 101, 242, 0.15);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>SFREM STORE 🛒</h1>
-    <div class="subtitle">منصة أدوات ديسكورد المتكاملة</div>
+    <div class="brand-header">
+        <h1 class="brand-title"><i class="fa-solid fa-store"></i> SFREM STORE</h1>
+        <div class="subtitle">منصة أدوات ديسكورد الشاملة والاحترافية</div>
+    </div>
 
-    <label for="toolSelect">اختر الأداة المطلوبة:</label>
-    <select id="toolSelect" onchange="switchTool()">
-        <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
-        <option value="coming_soon" disabled>قريباً أدوات جديدة... 🚀</option>
-    </select>
-
-    <!-- قسم أداة الهايب سكواد -->
-    <div id="hypesquadTool" class="tool-section active-tool">
-        <label for="token">توكن الحساب (Discord Token):</label>
-        <input type="password" id="token" placeholder="أدخل التوكن هنا..." required>
-
-        <label for="house">اختر البيت أو الإجراء:</label>
-        <select id="house">
-            <option value="1">Bravery 🟣 (شجاعة)</option>
-            <option value="2">Brilliance 🔴 (براعة)</option>
-            <option value="3">Balance 🟢 (توازن)</option>
-            <option value="leave">❌ إزالة/إلغاء الشارة</option>
+    <div class="form-group">
+        <label for="toolSelect"><i class="fa-solid fa-toolbox"></i> اختر الأداة المطلوبة:</label>
+        <select id="toolSelect">
+            <option value="hypesquad">أداة تغيير الـ HypeSquad 🏆</option>
+            <option value="coming_soon" disabled>قريباً أدوات جديدة... 🚀</option>
         </select>
+    </div>
 
-        <button onclick="handleHypeSquad()">تنفيذ الإجراء</button>
+    <div id="hypesquadTool">
+        <div class="form-group">
+            <label for="token"><i class="fa-solid fa-key"></i> توكن الحساب (Discord Token):</label>
+            <input type="password" id="token" placeholder="ضع التوكن الخاص بك هنا..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="house"><i class="fa-solid fa-shield-halved"></i> اختر البيت أو الإجراء:</label>
+            <select id="house">
+                <option value="1">Bravery 🟣 (بيت الشجاعة)</option>
+                <option value="2">Brilliance 🔴 (بيت البراعة)</option>
+                <option value="3">Balance 🟢 (بيت التوازن)</option>
+                <option value="leave">❌ إزالة / إلغاء الشارة نهائياً</option>
+            </select>
+        </div>
+
+        <button onclick="handleHypeSquad()"><i class="fa-solid fa-bolt"></i> تنفيذ الإجراء الآن</button>
     </div>
 
     <div id="status" class="status"></div>
@@ -62,23 +236,17 @@
 <div class="footer">
     جميع الحقوق محفوظة © <b>SFREM STORE</b><br>
     تم برمجة هذا الموقع بواسطة المبرمج علي (Sefirem)<br>
-    <b>للتواصل:</b>
     <div class="links-container">
-        <a href="https://discord.com/users/a5mi" target="_blank">حسابي الشخصي (a5mi)</a> | 
-        <a href="https://discord.gg/sfrem" target="_blank">سيرفر الديسكورد (sfrem)</a>
+        <a class="btn-link" href="https://discord.com/users/a5mi" target="_blank">
+            <i class="fa-brands fa-discord"></i> حسابي (a5mi)
+        </a>
+        <a class="btn-link" href="https://discord.gg/sfrem" target="_blank">
+            <i class="fa-solid fa-server"></i> سيرفرنا (sfrem)
+        </a>
     </div>
 </div>
 
 <script>
-function switchTool() {
-    const selected = document.getElementById('toolSelect').value;
-    const hypesquadTool = document.getElementById('hypesquadTool');
-    
-    if (selected === 'hypesquad') {
-        hypesquadTool.classList.add('active-tool');
-    }
-}
-
 async function handleHypeSquad() {
     const token = document.getElementById('token').value.trim();
     const house = document.getElementById('house').value;
@@ -86,12 +254,12 @@ async function handleHypeSquad() {
 
     if (!token) {
         statusDiv.className = "status error";
-        statusDiv.innerText = "الرجاء كتابة التوكن أولاً!";
+        statusDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> يرجى إدخال التوكن أولاً!';
         return;
     }
 
     statusDiv.className = "status info";
-    statusDiv.innerText = "جاري تنفيذ الطلب...";
+    statusDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تنفيذ الطلب...';
 
     try {
         let response;
@@ -116,14 +284,16 @@ async function handleHypeSquad() {
 
         if (response.ok || response.status === 204) {
             statusDiv.className = "status success";
-            statusDiv.innerText = house === 'leave' ? "تم إزالة شارة الـ HypeSquad بنجاح! 🗑️" : "تم تغيير الـ HypeSquad بنجاح! 🎉";
+            statusDiv.innerHTML = house === 'leave' 
+                ? '<i class="fa-solid fa-circle-check"></i> تم إزالة شارة الـ HypeSquad بنجاح!' 
+                : '<i class="fa-solid fa-circle-check"></i> تم تغيير الـ HypeSquad بنجاح! 🎉';
         } else {
             statusDiv.className = "status error";
-            statusDiv.innerText = "فشل الإجراء! تأكد من صحة التوكن.";
+            statusDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> فشل الإجراء! تأكد من صحة التوكن.';
         }
     } catch (err) {
         statusDiv.className = "status error";
-        statusDiv.innerText = "حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.";
+        statusDiv.innerHTML = '<i class="fa-solid fa-wifi"></i> حدث خطأ أثناء الاتصال بسيرفرات ديسكورد.';
     }
 }
 </script>
